@@ -8,10 +8,8 @@ export class ScheduledServiceService {
 
   constructor(
     @InjectRepository(ScheduledService) 
-      private scheduledServiceRepository: Repository<ScheduledService>
-  ) {
-  
-  }
+    private scheduledServiceRepository: Repository<ScheduledService>
+  ) {}
 
   getAll(): Promise<ScheduledService[]> {
     return this.scheduledServiceRepository.find();
