@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IsDefined, IsEnum, IsIn } from "class-validator";
+import { ExpandedEntity } from "base-extensions/expandedEntity";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum ScheduledServiceState {
   SCHEDULED = 'scheduled',
@@ -14,21 +16,24 @@ export enum ScheduledServiceState {
 
   }
 })
-export class ScheduledService extends BaseEntity {
+export class ScheduledService extends ExpandedEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column('timestamptz')
-  dateStart: Date;
+  @IsDefined()
+  dateStart!: Date;
 
   @Column('timestamptz')
-  dateEnd: Date;
+  @IsDefined()
+  dateEnd!: Date;
 
   @Column('enum', {
     enum: ScheduledServiceState,
     default: ScheduledServiceState.SCHEDULED, 
   })
-  state: ScheduledServiceState
+  @IsEnum(ScheduledServiceState)
+  state: ScheduledServiceState = ScheduledServiceState.SCHEDULED;
 
 }
